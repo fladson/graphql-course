@@ -6,6 +6,7 @@ const type = `
     hello: String!
     location: String!
     me: User!
+    post: Post!
   }
 
   type User {
@@ -13,6 +14,13 @@ const type = `
     name: String!
     email: String!
     age: Int
+  }
+
+  type Post {
+    id: ID!
+    title: String!
+    body: String!
+    published: Boolean!
   }
 `
 
@@ -29,6 +37,14 @@ const resolvers = {
         id: "012943",
         name: "Name",
         email: "email@email.com"
+      }
+    },
+    post(){
+      return {
+        id: "1",
+        title: "Post Title",
+        body: "Body",
+        published: true
       }
     }
   }
