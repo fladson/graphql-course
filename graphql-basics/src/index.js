@@ -1,5 +1,15 @@
 import { GraphQLServer } from "graphql-yoga";
 
+const users = [{
+  id: "1",
+  name: "name",
+  email: "email@email.com",
+  age: 33
+}, {
+  id: "2",
+  name: "user",
+  email: "user@email.com",
+}]
 // Scalar types: String, Boolean, Int, Float, ID
 const type = `
   type Query {
@@ -7,7 +17,9 @@ const type = `
     location: String!
     me: User!
     post: Post!
-    add(a: Float!, b: Float!): Float!
+    add(numbers: [Float!]!): Float!
+    grades: [Int!]!
+    users(query: String): [User!]!
   }
 
   type User {
@@ -49,7 +61,25 @@ const resolvers = {
       }
     },
     add(parent, args, context, info){
-      return args.a + args.b
+      if (args.numbers.length === 0) {
+        return 0
+      }
+
+      return args.numbers.reduce((accumulator, currentValue) => {
+        return accumulator + currentValue
+      })
+    },
+    grades(parent, args, context, info){
+      return [99, 80, 90]
+    },
+    users(parent, args, context, info){
+      if (!args.query) {
+        return users
+      }
+
+      return users.filter((user) => {
+        return user.name.toLowerCase().includes(args.query.toLowerCase())
+      })
     }
   }
 }
