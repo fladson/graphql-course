@@ -1,4 +1,10 @@
 query {
+  posts(query: "Body") {
+    id
+    title
+    body
+    published
+  }
   users(query: "us") {
     id
     name

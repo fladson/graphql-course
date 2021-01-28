@@ -10,6 +10,18 @@ const users = [{
   name: "user",
   email: "user@email.com",
 }]
+
+const posts = [{
+  id: "1",
+  title: "Title",
+  body: "Body",
+  published: false
+}, {
+  id: "2",
+  title: "Title 1",
+  body: "Body 1",
+  published: true
+}]
 // Scalar types: String, Boolean, Int, Float, ID
 const type = `
   type Query {
@@ -20,6 +32,7 @@ const type = `
     add(numbers: [Float!]!): Float!
     grades: [Int!]!
     users(query: String): [User!]!
+    posts(query: String): [Post!]!
   }
 
   type User {
@@ -79,6 +92,18 @@ const resolvers = {
 
       return users.filter((user) => {
         return user.name.toLowerCase().includes(args.query.toLowerCase())
+      })
+    },
+    posts(parent, args, context, info) {
+      if (!args.query) {
+        return posts
+      }
+
+      return posts.filter((post) => {
+        const isTitleMatch = post.title.toLowerCase().includes(args.query.toLowerCase())
+        const isBodyMatch = post.body.toLowerCase().includes(args.query.toLowerCase())
+
+        return isTitleMatch || isBodyMatch
       })
     }
   }
