@@ -7,6 +7,7 @@ const type = `
     location: String!
     me: User!
     post: Post!
+    add(a: Float!, b: Float!): Float!
   }
 
   type User {
@@ -46,6 +47,9 @@ const resolvers = {
         body: "Body",
         published: true
       }
+    },
+    add(parent, args, context, info){
+      return args.a + args.b
     }
   }
 }
