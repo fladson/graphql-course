@@ -1,0 +1,20 @@
+query {
+  users(query: "us") {
+    id
+    name
+    age
+    email
+  }
+  grades
+  add(numbers: [1, 2, 3, 4])
+  hello
+  location
+  me {
+    name
+    age
+  }
+  post {
+    id
+    title
+  }
+}
